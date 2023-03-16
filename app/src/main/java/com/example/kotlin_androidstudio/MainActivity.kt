@@ -6,13 +6,20 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Phone
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -47,7 +54,8 @@ fun main_page(){
 //    Tutorial2("Korean")
 //    Tutorial3()
 //    Tutorial4()
-    Tutorial5()
+//    Tutorial5()
+    Tutorial6()
 }
 @Composable
 fun Tutorial1(name: String) {
@@ -262,6 +270,95 @@ fun Tutorial5Card(
         Text(
             text = description,
             textAlign = TextAlign.Justify
+        )
+    }
+}
+
+@Composable
+fun Tutorial6(){
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight()
+    ) {
+        Tutorial6Title(name = "KWONWOO CHOI")
+        Column(horizontalAlignment=Alignment.Start) {
+            Tutorial6CardInfo(
+                cardIcon = Icons.Filled.Phone,
+                description = "+82(10) 1234-5678"
+            )
+            Tutorial6CardInfo(
+                cardIcon = Icons.Filled.Share,
+                description = "@qwerty"
+            )
+            Tutorial6CardInfo(
+                cardIcon = Icons.Filled.Email,
+                description = "ckw075@naver.com"
+            )
+        }
+    }
+}
+
+@Composable
+fun Tutorial6Title(name:String = "Unknown", compony:String = "Unknown") {
+    val IconImage = painterResource(R.drawable.ic_channel_foreground)
+    val backgroundIconImage = painterResource(R.drawable.ic_channel_background)
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Box {
+            Image(
+                painter = backgroundIconImage,
+                contentDescription = null,
+                Modifier.requiredSize(
+                    width = 180.dp,
+                    height = 180.dp
+                )
+            )
+            Image(
+                painter = IconImage,
+                contentDescription = null,
+                Modifier.requiredSize(
+                    width = 180.dp,
+                    height = 180.dp
+                )
+            )
+        }
+        Text(
+            text = name,
+            fontSize = 36.sp,
+            modifier = Modifier.padding(top = 10.dp, bottom = 5.dp)
+        )
+        Text(
+            text = compony,
+            fontSize = 24.sp,
+            modifier = Modifier.padding(bottom = 5.dp)
+        )
+    }
+}
+
+@Composable
+fun Tutorial6CardInfo(
+    cardIcon: ImageVector = Icons.Filled.Close,
+    description:String = "Unknown"
+){
+    Row(){
+        Icon(
+            cardIcon,
+            contentDescription =
+            if (cardIcon == Icons.Filled.Close) "Unknown" else null
+        )
+        Spacer(Modifier.size(20.dp))
+        Text(
+            text = description,
+            modifier = Modifier
+                .padding(
+                    top = 5.dp,
+                    bottom = 5.dp
+                )
         )
     }
 }
