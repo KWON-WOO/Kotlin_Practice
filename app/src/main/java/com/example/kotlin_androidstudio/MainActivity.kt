@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -11,9 +12,11 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -43,7 +46,8 @@ fun main_page(){
 //    Tutorial1("NickName")
 //    Tutorial2("Korean")
 //    Tutorial3()
-    Tutorial4()
+//    Tutorial4()
+    Tutorial5()
 }
 @Composable
 fun Tutorial1(name: String) {
@@ -63,9 +67,9 @@ fun Tutorial2(language: String){
         contentScale = ContentScale.Crop
     )
     if (language == "Korean")
-        Tutorial2_text(stringResource(R.string.Happy_Birthday_KOR), stringResource(R.string.signature_text_KOR))
+        Tutorial2_text(stringResource(R.string.Tutorial2_Happy_Birthday_KOR), stringResource(R.string.Tutorial2_signature_text_KOR))
     else if (language == "English")
-        Tutorial2_text(stringResource(R.string.Happy_Birthday_ENG), stringResource(R.string.signature_text_ENG))
+        Tutorial2_text(stringResource(R.string.Tutorial2_Happy_Birthday_ENG), stringResource(R.string.Tutorial2_signature_text_ENG))
     else
         printText("Unknown Language")
 }
@@ -200,6 +204,66 @@ fun Tutorial4Text(){
         text = "Nick work!",
         fontSize = 16.sp
     )
+}
+
+@Composable
+fun Tutorial5(){
+    Column(modifier = Modifier.fillMaxWidth()){
+        Row(modifier = Modifier.weight(1f)){
+            Tutorial5Card(
+                title = stringResource(R.string.Tutorial5_first_title),
+                description = stringResource(R.string.Tutorial5_first_description),
+                backgroundColor = Color.Green,
+                modifier = Modifier.weight(1f)
+            )
+            Tutorial5Card(
+                title = stringResource(R.string.Tutorial5_second_title),
+                description = stringResource(R.string.Tutorial5_second_description),
+                backgroundColor = Color.Yellow,
+                modifier = Modifier.weight(1f)
+            )
+        }
+        Row(modifier = Modifier.weight(1f)){
+            Tutorial5Card(
+                title = stringResource(R.string.Tutorial5_third_title),
+                description = stringResource(R.string.Tutorial5_third_description),
+                backgroundColor = Color.Cyan,
+                modifier = Modifier.weight(1f)
+            )
+            Tutorial5Card(
+                title = stringResource(R.string.Tutorial5_fourth_title),
+                description = stringResource(R.string.Tutorial5_fourth_description),
+                backgroundColor = Color.Gray,
+                modifier = Modifier.weight(1f)
+            )
+        }
+    }
+}
+
+@Composable
+fun Tutorial5Card(
+    title:String,
+    description: String,
+    backgroundColor: Color,
+    modifier:Modifier = Modifier
+){
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+        modifier = modifier
+            .fillMaxSize()
+            .background(backgroundColor)
+            .padding(16.dp)
+    ){
+        Text(
+        text = title,
+        fontWeight = FontWeight.Bold
+        )
+        Text(
+            text = description,
+            textAlign = TextAlign.Justify
+        )
+    }
 }
 @Composable
 fun printText(message: String) {
