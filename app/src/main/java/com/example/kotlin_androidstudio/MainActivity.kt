@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -41,7 +42,8 @@ class MainActivity : ComponentActivity() {
 fun main_page(){
 //    Tutorial1("NickName")
 //    Tutorial2("Korean")
-    Tutorial3()
+//    Tutorial3()
+    Tutorial4()
 }
 @Composable
 fun Tutorial1(name: String) {
@@ -161,6 +163,42 @@ fun Tutorial3_Content(name: String){
                 top = 16.dp
             ),
         textAlign = TextAlign.Justify
+    )
+}
+
+@Composable
+fun Tutorial4(){
+    val image = painterResource(R.drawable.ic_task_completed)
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ){
+        Image(
+            painter = image,
+            contentDescription = null
+        )
+        Tutorial4Text()
+    }
+}
+
+@Composable
+fun Tutorial4Text(){
+    Text(
+        text = "All tasks completed",
+        fontWeight = Bold,
+        fontSize = 24.sp,
+        modifier = Modifier
+            .padding(
+                top = 24.dp,
+                bottom = 8.dp
+            )
+    )
+    Text(
+        text = "Nick work!",
+        fontSize = 16.sp
     )
 }
 @Composable
