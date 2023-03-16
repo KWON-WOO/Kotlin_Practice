@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Kotlin_AndroidStudio</string>
+    <string name="Happy_Birthday_ENG">Happy Birthday!</string>
+    <string name="signature_text_ENG">- from NickName</string>
+    <string name="Happy_Birthday_KOR">생일축하해!</string>
+    <string name="signature_text_KOR">- 닉네임 올림</string>
 </resources>
