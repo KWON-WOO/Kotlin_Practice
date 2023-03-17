@@ -49,22 +49,26 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun main_page(){
+fun main_page() {
 //    Tutorial1("NickName")
 //    Tutorial2("Korean")
 //    Tutorial3()
 //    Tutorial4()
 //    Tutorial5()
-    Tutorial6()
+//    Tutorial6()
+    Tutorial7()
+
 }
+
 @Composable
 fun Tutorial1(name: String) {
     Text(
         text = "Hello, my name is $name!", Modifier.padding(24.dp)
     )
 }
+
 @Composable
-fun Tutorial2(language: String){
+fun Tutorial2(language: String) {
     val image = painterResource(R.drawable.androidparty)
     Image(
         painter = image,
@@ -75,15 +79,22 @@ fun Tutorial2(language: String){
         contentScale = ContentScale.Crop
     )
     if (language == "Korean")
-        Tutorial2_text(stringResource(R.string.Tutorial2_Happy_Birthday_KOR), stringResource(R.string.Tutorial2_signature_text_KOR))
+        Tutorial2_text(
+            stringResource(R.string.Tutorial2_Happy_Birthday_KOR),
+            stringResource(R.string.Tutorial2_signature_text_KOR)
+        )
     else if (language == "English")
-        Tutorial2_text(stringResource(R.string.Tutorial2_Happy_Birthday_ENG), stringResource(R.string.Tutorial2_signature_text_ENG))
+        Tutorial2_text(
+            stringResource(R.string.Tutorial2_Happy_Birthday_ENG),
+            stringResource(R.string.Tutorial2_signature_text_ENG)
+        )
     else
         printText("Unknown Language")
 }
+
 @Composable
-fun Tutorial2_text(message: String, from: String){
-    Column{
+fun Tutorial2_text(message: String, from: String) {
+    Column {
         Text(
             text = message,
             fontSize = 36.sp,
@@ -110,7 +121,7 @@ fun Tutorial2_text(message: String, from: String){
 }
 
 @Composable
-fun Tutorial3(){
+fun Tutorial3() {
     val image = painterResource(R.drawable.bg_compose_background)
     Column {
         Image(
@@ -124,7 +135,7 @@ fun Tutorial3(){
 }
 
 @Composable
-fun Tutorial3_Content(name: String){
+fun Tutorial3_Content(name: String) {
     Text(
         text = "Jetpack Compose $name",
         fontSize = 24.sp,
@@ -179,7 +190,7 @@ fun Tutorial3_Content(name: String){
 }
 
 @Composable
-fun Tutorial4(){
+fun Tutorial4() {
     val image = painterResource(R.drawable.ic_task_completed)
     Column(
         modifier = Modifier
@@ -187,7 +198,7 @@ fun Tutorial4(){
             .fillMaxHeight(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
-    ){
+    ) {
         Image(
             painter = image,
             contentDescription = null
@@ -197,7 +208,7 @@ fun Tutorial4(){
 }
 
 @Composable
-fun Tutorial4Text(){
+fun Tutorial4Text() {
     Text(
         text = "All tasks completed",
         fontWeight = Bold,
@@ -215,9 +226,9 @@ fun Tutorial4Text(){
 }
 
 @Composable
-fun Tutorial5(){
-    Column(modifier = Modifier.fillMaxWidth()){
-        Row(modifier = Modifier.weight(1f)){
+fun Tutorial5() {
+    Column(modifier = Modifier.fillMaxWidth()) {
+        Row(modifier = Modifier.weight(1f)) {
             Tutorial5Card(
                 title = stringResource(R.string.Tutorial5_first_title),
                 description = stringResource(R.string.Tutorial5_first_description),
@@ -231,7 +242,7 @@ fun Tutorial5(){
                 modifier = Modifier.weight(1f)
             )
         }
-        Row(modifier = Modifier.weight(1f)){
+        Row(modifier = Modifier.weight(1f)) {
             Tutorial5Card(
                 title = stringResource(R.string.Tutorial5_third_title),
                 description = stringResource(R.string.Tutorial5_third_description),
@@ -250,11 +261,11 @@ fun Tutorial5(){
 
 @Composable
 fun Tutorial5Card(
-    title:String,
+    title: String,
     description: String,
     backgroundColor: Color,
-    modifier:Modifier = Modifier
-){
+    modifier: Modifier = Modifier
+) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
@@ -262,10 +273,10 @@ fun Tutorial5Card(
             .fillMaxSize()
             .background(backgroundColor)
             .padding(16.dp)
-    ){
+    ) {
         Text(
-        text = title,
-        fontWeight = FontWeight.Bold
+            text = title,
+            fontWeight = FontWeight.Bold
         )
         Text(
             text = description,
@@ -275,7 +286,7 @@ fun Tutorial5Card(
 }
 
 @Composable
-fun Tutorial6(){
+fun Tutorial6() {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
@@ -284,7 +295,7 @@ fun Tutorial6(){
             .fillMaxHeight()
     ) {
         Tutorial6Title(name = "KWONWOO CHOI")
-        Column(horizontalAlignment=Alignment.Start) {
+        Column(horizontalAlignment = Alignment.Start) {
             Tutorial6CardInfo(
                 cardIcon = Icons.Filled.Phone,
                 description = "+82(10) 1234-5678"
@@ -302,7 +313,7 @@ fun Tutorial6(){
 }
 
 @Composable
-fun Tutorial6Title(name:String = "Unknown", compony:String = "Unknown") {
+fun Tutorial6Title(name: String = "Unknown", compony: String = "Unknown") {
     val IconImage = painterResource(R.drawable.ic_channel_foreground)
     val backgroundIconImage = painterResource(R.drawable.ic_channel_background)
     Column(
@@ -343,9 +354,9 @@ fun Tutorial6Title(name:String = "Unknown", compony:String = "Unknown") {
 @Composable
 fun Tutorial6CardInfo(
     cardIcon: ImageVector = Icons.Filled.Close,
-    description:String = "Unknown"
-){
-    Row(){
+    description: String = "Unknown"
+) {
+    Row() {
         Icon(
             cardIcon,
             contentDescription =
@@ -362,6 +373,39 @@ fun Tutorial6CardInfo(
         )
     }
 }
+
+@Composable
+fun Tutorial7() {
+    var selectNumber = 0
+    val trafficLightColor = "Red"
+    val integerNumber = 0
+    when (selectNumber) {
+        1 -> Tutorial7_if_Conditionals(trafficLightColor)
+        2 -> Tutorial7_in_And_Is_Conditionals(integerNumber)
+        else -> printText("$selectNumber is not 1 or 2.")
+    }
+}
+
+@Composable
+fun Tutorial7_if_Conditionals(testColor: String) {
+    if (testColor == "Red") {
+        printText("Stop")
+    } else if (testColor == "Yellow") {
+        printText("Slow")
+    } else {
+        printText("Invalid traffic_Light color")
+    }
+}
+
+@Composable
+fun Tutorial7_in_And_Is_Conditionals(testNumber: Int = 0) {
+    when (testNumber) {
+        in 1..10 -> printText("$testNumber is a numbmer between 1 and 10.")
+        is Int -> printText("$testNumber is an integer number, but not between 1 and 10.")
+        else -> printText("$testNumber isn't an integer number.")
+    }
+}
+
 @Composable
 fun printText(message: String) {
     Text(
