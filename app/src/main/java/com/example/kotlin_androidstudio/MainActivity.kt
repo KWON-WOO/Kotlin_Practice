@@ -56,8 +56,8 @@ fun main_page() {
 //    Tutorial4()
 //    Tutorial5()
 //    Tutorial6()
-    Tutorial7()
-
+//    Tutorial7()
+Tutorial8()
 }
 
 @Composable
@@ -407,10 +407,29 @@ fun Tutorial7_in_And_Is_Conditionals(testNumber: Int = 0) {
 }
 
 @Composable
+fun Tutorial8() {
+    Column(){
+        var favoriteActor: String?
+        favoriteActor = "Meryl Streep"
+        printText(favoriteActor)
+        printText(favoriteActor?.length.toString())
+//        When the value is not null, it is possible to replace "?" with "!!.
+//        However, if replace it with "!!", an error will occur when the variable value is null.
+        favoriteActor = null
+        if (favoriteActor != null) {
+            printText("favorite actor's name is ${(favoriteActor).toString()}\n")
+        } else {
+            printText("You didn't input a name.")
+        }
+        val lengthOfName = favoriteActor?.length ?:0 //When using a nullable variable.
+//        if the variable is not null, the value before the ?: operator is applied,
+//        and if it is null, the value after the ?: operator is applied.
+        printText("\n\nlength : ${lengthOfName}")
+    }
+}
+@Composable
 fun printText(message: String) {
-    Text(
-        text = message
-    )
+    Text(text = message)
 }
 
 @Preview(showBackground = true)
