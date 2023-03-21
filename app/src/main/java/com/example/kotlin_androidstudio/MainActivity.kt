@@ -57,7 +57,8 @@ fun main_page() {
 //    Tutorial5()
 //    Tutorial6()
 //    Tutorial7()
-Tutorial8()
+//    Tutorial8()
+    Tutorial9()
 }
 
 @Composable
@@ -425,6 +426,152 @@ fun Tutorial8() {
 //        if the variable is not null, the value before the ?: operator is applied,
 //        and if it is null, the value after the ?: operator is applied.
         printText("\n\nlength : ${lengthOfName}")
+    }
+}
+@Composable
+fun Tutorial9() {
+    Column() {
+        var tutorialDevice: Tutorial9SmartDevice = Tutorial9TV("Android Tv", "Entertainment")
+        printText("Device name is ${tutorialDevice.name}")
+        tutorialDevice.turnOn()
+        printText("")
+        tutorialDevice = Tutorial9LightDevice("Google Light", "Utility")
+        tutorialDevice.turnOn()
+        tutorialDevice.turnOff()
+
+    }
+}
+open class Tutorial9SmartDevice(val name: String, val category: String){
+    var deviceStatus = "online"
+    open val deviceType = "unknown"
+    constructor(name: String, category: String, statusCode: Int): this(name, category){
+        deviceStatus = when (statusCode) {
+//
+            0 -> "offline"
+            1 -> "online"
+            else -> "unknown"
+        }
+    }
+
+    @Composable
+    open fun turnOn(){
+        printText("on")
+    }
+    @Composable
+    open fun turnOff() {
+        printText("off")
+    }
+}
+
+class Tutorial9TV(deviceName: String, deviceCategory: String) : Tutorial9SmartDevice(name = deviceName, category= deviceCategory) {
+    override val deviceType = "Smart TV"
+    var speakerVolume = 2
+        set(value) {
+            if (value in 0..100) {
+                field = value
+            }
+        }
+    var channelNumber = 1
+    set(value) {
+        if (value in 0..200) {
+            field = value
+        }
+    }
+    @Composable
+    override fun turnOn() {
+        deviceStatus = "on"
+        super.turnOn()
+        printText(
+            "$name is turned on. Speaker volume is set to $speakerVolume and channel number is " +
+                    "set to $channelNumber."
+        )
+    }
+    @Composable
+    override fun turnOff() {
+        deviceStatus = "off"
+        super.turnOff()
+        printText("$name turned off")
+    }
+    @Composable
+    fun increaseSpeakerVolume() {
+        speakerVolume++
+        printText("speaker volume increased to $speakerVolume.")
+    }
+
+    @Composable
+    fun nextChannel() {
+        channelNumber++
+        printText("Channel number increased to $channelNumber.")
+    }
+}
+
+class Tutorial9LightDevice(deviceName: String, deviceCategory: String) : Tutorial9SmartDevice(name = deviceName, category = deviceCategory) {
+    override val deviceType = "Smart Light"
+    var brightnessLevel = 0
+    set(value) {
+        if (value in 0..100) {
+            field = value
+        }
+    }
+    @Composable
+    override fun turnOn() {
+        deviceStatus = "On"
+        brightnessLevel = 2
+        super.turnOn()
+        printText("$name turned on. The brightness level is $brightnessLevel.")
+    }
+    @Composable
+    override fun turnOff() {
+        deviceStatus = "off"
+        brightnessLevel = 0
+        super.turnOff()
+        printText("Smart Light turned off")
+    }
+    @Composable
+    fun increaseBrightness() {
+        brightnessLevel++
+        printText("Brightness increased to $brightnessLevel")
+    }
+}
+
+class Tutorial9SmartHome(
+    val smartTvDevice: Tutorial9TV,
+    val smartLightDevice: Tutorial9LightDevice
+    ) {
+    @Composable
+    fun turnOnTV() {
+        smartTvDevice.turnOn()
+    }
+    @Composable
+    fun turnOffTV(){
+        smartTvDevice.turnOff()
+    }
+
+    @Composable
+    fun increaseTvVolume() {
+        smartTvDevice.increaseSpeakerVolume()
+    }
+
+    @Composable
+    fun changeTvChannelToNext() {
+        smartTvDevice.nextChannel()
+    }
+    @Composable
+    fun turnOnLight() {
+        smartLightDevice.turnOn()
+    }
+    @Composable
+    fun turnOffLight() {
+        smartLightDevice.turnOff()
+    }
+    @Composable
+    fun increaselightBrightness() {
+        smartLightDevice.increaseBrightness()
+    }
+    @Composable
+    fun turnOffAllDevice() {
+        turnOffTV()
+        turnOffLight()
     }
 }
 @Composable
