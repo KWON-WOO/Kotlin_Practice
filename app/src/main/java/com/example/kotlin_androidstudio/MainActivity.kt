@@ -441,12 +441,17 @@ fun Tutorial9() {
 
     }
 }
-open class Tutorial9SmartDevice(val name: String, val category: String){
+internal open class Tutorial9SmartDevice(val name: String, val category: String){
+//
     var deviceStatus = "online"
+    protected set(value) {
+        field = value
+    }
+//    if the setter has the default form as shown above,
+//    it can be omitted with the 'protected set' shorthand.
     open val deviceType = "unknown"
     constructor(name: String, category: String, statusCode: Int): this(name, category){
         deviceStatus = when (statusCode) {
-//
             0 -> "offline"
             1 -> "online"
             else -> "unknown"
@@ -465,13 +470,13 @@ open class Tutorial9SmartDevice(val name: String, val category: String){
 
 class Tutorial9TV(deviceName: String, deviceCategory: String) : Tutorial9SmartDevice(name = deviceName, category= deviceCategory) {
     override val deviceType = "Smart TV"
-    var speakerVolume = 2
+    private var speakerVolume = 2
         set(value) {
             if (value in 0..100) {
                 field = value
             }
         }
-    var channelNumber = 1
+    private var channelNumber = 1
     set(value) {
         if (value in 0..200) {
             field = value
@@ -499,7 +504,7 @@ class Tutorial9TV(deviceName: String, deviceCategory: String) : Tutorial9SmartDe
     }
 
     @Composable
-    fun nextChannel() {
+    protected fun nextChannel() {
         channelNumber++
         printText("Channel number increased to $channelNumber.")
     }
@@ -538,12 +543,17 @@ class Tutorial9SmartHome(
     val smartTvDevice: Tutorial9TV,
     val smartLightDevice: Tutorial9LightDevice
     ) {
+    var deviceTurnOnCount = 0
+    private set
+
     @Composable
     fun turnOnTV() {
+        deviceTurnOnCount++
         smartTvDevice.turnOn()
     }
     @Composable
     fun turnOffTV(){
+        deviceTurnOnCount--
         smartTvDevice.turnOff()
     }
 
@@ -558,10 +568,12 @@ class Tutorial9SmartHome(
     }
     @Composable
     fun turnOnLight() {
+        deviceTurnOnCount++
         smartLightDevice.turnOn()
     }
     @Composable
     fun turnOffLight() {
+        deviceTurnOnCount--
         smartLightDevice.turnOff()
     }
     @Composable
