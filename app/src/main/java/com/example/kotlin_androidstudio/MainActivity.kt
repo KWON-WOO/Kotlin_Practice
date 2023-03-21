@@ -30,6 +30,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.kotlin_androidstudio.ui.theme.Kotlin_AndroidStudioTheme
+import kotlin.properties.ReadWriteProperty
+import kotlin.reflect.KProperty
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -431,17 +433,36 @@ fun Tutorial8() {
 @Composable
 fun Tutorial9() {
     Column() {
-        var tutorialDevice: Tutorial9SmartDevice = Tutorial9TV("Android Tv", "Entertainment")
-        printText("Device name is ${tutorialDevice.name}")
-        tutorialDevice.turnOn()
-        printText("")
-        tutorialDevice = Tutorial9LightDevice("Google Light", "Utility")
-        tutorialDevice.turnOn()
-        tutorialDevice.turnOff()
+        val smartHome = Tutorial9SmartHome(
+            Tutorial9TV(deviceName = "Android TV", deviceCategory = "Entertainment"),
+            Tutorial9LightDevice(deviceName = "Google light", deviceCategory = "Utility")
+        )
+        smartHome.turnOnTV()
+        smartHome.turnOnLight()
+        printText("Total number of device currently turned on: ${smartHome.deviceTurnOnCount}")
+        printText()
+
+        smartHome.increaseTvVolume()
+        smartHome.changeTvChannelToNext()
+        smartHome.increaselightBrightness()
+        printText()
+
+        smartHome.turnOffAllDevice()
+        printText("Total number of devices currently turned on: ${smartHome.deviceTurnOnCount}")
 
     }
 }
-internal open class Tutorial9SmartDevice(val name: String, val category: String){
+
+class RangeRegulator(initialValue: Int, private val minValue: Int, private val maxValue: Int): ReadWriteProperty<Any?, Int> {
+    var fieldData = initialValue
+    override fun getValue(thisRef: Any?, property: KProperty<*>): Int{
+        return fieldData
+    }
+    override fun setValue(thisRef: Any?, property: KProperty<*>, value:Int){
+        fieldData = value
+    }
+}
+open class Tutorial9SmartDevice(val name: String, val category: String){
 //
     var deviceStatus = "online"
     protected set(value) {
@@ -470,21 +491,11 @@ internal open class Tutorial9SmartDevice(val name: String, val category: String)
 
 class Tutorial9TV(deviceName: String, deviceCategory: String) : Tutorial9SmartDevice(name = deviceName, category= deviceCategory) {
     override val deviceType = "Smart TV"
-    private var speakerVolume = 2
-        set(value) {
-            if (value in 0..100) {
-                field = value
-            }
-        }
-    private var channelNumber = 1
-    set(value) {
-        if (value in 0..200) {
-            field = value
-        }
-    }
+    private var speakerVolume by RangeRegulator(initialValue = 1, minValue = 0, maxValue = 100)
+    private var channelNumber by RangeRegulator(initialValue = 1, minValue = 0, maxValue = 200)
+
     @Composable
     override fun turnOn() {
-        deviceStatus = "on"
         super.turnOn()
         printText(
             "$name is turned on. Speaker volume is set to $speakerVolume and channel number is " +
@@ -493,7 +504,6 @@ class Tutorial9TV(deviceName: String, deviceCategory: String) : Tutorial9SmartDe
     }
     @Composable
     override fun turnOff() {
-        deviceStatus = "off"
         super.turnOff()
         printText("$name turned off")
     }
@@ -504,7 +514,7 @@ class Tutorial9TV(deviceName: String, deviceCategory: String) : Tutorial9SmartDe
     }
 
     @Composable
-    protected fun nextChannel() {
+    fun nextChannel() {
         channelNumber++
         printText("Channel number increased to $channelNumber.")
     }
@@ -512,22 +522,15 @@ class Tutorial9TV(deviceName: String, deviceCategory: String) : Tutorial9SmartDe
 
 class Tutorial9LightDevice(deviceName: String, deviceCategory: String) : Tutorial9SmartDevice(name = deviceName, category = deviceCategory) {
     override val deviceType = "Smart Light"
-    var brightnessLevel = 0
-    set(value) {
-        if (value in 0..100) {
-            field = value
-        }
-    }
+    var brightnessLevel by RangeRegulator(initialValue = 2, minValue = 0, maxValue = 100)
     @Composable
     override fun turnOn() {
-        deviceStatus = "On"
         brightnessLevel = 2
         super.turnOn()
         printText("$name turned on. The brightness level is $brightnessLevel.")
     }
     @Composable
     override fun turnOff() {
-        deviceStatus = "off"
         brightnessLevel = 0
         super.turnOff()
         printText("Smart Light turned off")
@@ -587,7 +590,7 @@ class Tutorial9SmartHome(
     }
 }
 @Composable
-fun printText(message: String) {
+fun printText(message: String = "") {
     Text(text = message)
 }
 
