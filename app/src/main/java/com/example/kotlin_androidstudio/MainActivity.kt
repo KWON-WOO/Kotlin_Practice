@@ -481,11 +481,15 @@ open class Tutorial9SmartDevice(val name: String, val category: String){
 
     @Composable
     open fun turnOn(){
-        printText("on")
+        deviceStatus = "on"
     }
     @Composable
     open fun turnOff() {
-        printText("off")
+        deviceStatus = "off"
+    }
+    @Composable
+    fun printDeviceInfo() {
+        printText("Device name: $name, category: $category, type: $deviceType")
     }
 }
 
@@ -514,8 +518,20 @@ class Tutorial9TV(deviceName: String, deviceCategory: String) : Tutorial9SmartDe
     }
 
     @Composable
+    fun decreaseVolume(){
+        speakerVolume--
+        printText("speaker volume decreased to $speakerVolume.")
+    }
+
+    @Composable
     fun nextChannel() {
         channelNumber++
+        printText("Channel number increased to $channelNumber.")
+    }
+
+    @Composable
+    fun previousChannel(){
+        channelNumber--
         printText("Channel number increased to $channelNumber.")
     }
 }
@@ -540,6 +556,12 @@ class Tutorial9LightDevice(deviceName: String, deviceCategory: String) : Tutoria
         brightnessLevel++
         printText("Brightness increased to $brightnessLevel")
     }
+
+    @Composable
+    fun decreaseBrightness(){
+        brightnessLevel--
+        printText("Brightness decreased to $brightnessLevel")
+    }
 }
 
 class Tutorial9SmartHome(
@@ -551,43 +573,92 @@ class Tutorial9SmartHome(
 
     @Composable
     fun turnOnTV() {
-        deviceTurnOnCount++
-        smartTvDevice.turnOn()
+        if (smartTvDevice.deviceStatus != "on") {
+            deviceTurnOnCount++
+            smartTvDevice.turnOn()
+        }
     }
     @Composable
     fun turnOffTV(){
-        deviceTurnOnCount--
-        smartTvDevice.turnOff()
+        if (smartTvDevice.deviceStatus == "on") {
+            deviceTurnOnCount--
+            smartTvDevice.turnOff()
+        }
     }
 
     @Composable
     fun increaseTvVolume() {
-        smartTvDevice.increaseSpeakerVolume()
+        if (smartTvDevice.deviceStatus == "on")
+            smartTvDevice.increaseSpeakerVolume()
+        else
+            printText("This device is turned off.")
+    }
+    @Composable
+    fun decreaseTvVolume() {
+        if (smartTvDevice.deviceStatus == "on")
+            smartTvDevice.decreaseVolume()
+        else
+            printText("This device is turned off.")
+    }
+    @Composable
+    fun changeTvChannelToNext() {
+        if (smartTvDevice.deviceStatus == "on")
+            smartTvDevice.nextChannel()
+        else
+            printText("This device is turned off.")
     }
 
     @Composable
-    fun changeTvChannelToNext() {
-        smartTvDevice.nextChannel()
+    fun changeTvChannelToPrevious() {
+        if (smartTvDevice.deviceStatus == "on")
+            smartTvDevice.previousChannel()
+        else
+            printText("This device is turned off.")
     }
     @Composable
+    fun printSmartTvInfo(){
+        smartTvDevice.printDeviceInfo()
+    }
+
+    @Composable
     fun turnOnLight() {
-        deviceTurnOnCount++
-        smartLightDevice.turnOn()
+        if (smartLightDevice.deviceStatus != "on") {
+            deviceTurnOnCount++
+            smartLightDevice.turnOn()
+        }
     }
     @Composable
     fun turnOffLight() {
-        deviceTurnOnCount--
-        smartLightDevice.turnOff()
+        if (smartLightDevice.deviceStatus == "on") {
+            deviceTurnOnCount--
+            smartLightDevice.turnOff()
+        }
     }
     @Composable
     fun increaselightBrightness() {
-        smartLightDevice.increaseBrightness()
+        if (smartLightDevice.deviceStatus == "on")
+            smartLightDevice.increaseBrightness()
+        else printText("This device is turned off.")
     }
+
+    @Composable
+    fun decreaselightBrightness() {
+        if (smartLightDevice.deviceStatus == "on")
+            smartLightDevice.decreaseBrightness()
+        else printText("This device is turned off.")
+    }
+
+    @Composable
+    fun printSmartLightInfo(){
+        smartLightDevice.printDeviceInfo()
+    }
+
     @Composable
     fun turnOffAllDevice() {
         turnOffTV()
         turnOffLight()
     }
+
 }
 @Composable
 fun printText(message: String = "") {
