@@ -60,8 +60,10 @@ fun main_page() {
 //    Tutorial6()
 //    Tutorial7()
 //    Tutorial8()
-    Tutorial9()
+//    Tutorial9()
+    Tutorial10()
 }
+
 
 @Composable
 fun Tutorial1(name: String) {
@@ -660,6 +662,41 @@ class Tutorial9SmartHome(
     }
 
 }
+
+@Composable
+fun Tutorial10() {
+    Column {
+        val coins: (Int) -> String = { quantity ->
+            "$quantity quarters"
+        }
+        val cupcake: (Int) -> String = {
+            "Have a cupcake!"
+        }
+        val trickFunction = Tutorial10TrickOrTreat(true, cupcake)
+        val treatFunction = Tutorial10TrickOrTreat(false, coins)
+        treatFunction()
+        trickFunction()
+    }
+}
+@Composable
+fun Tutorial10TrickOrTreat(isTrick: Boolean, extraTreat: (Int) -> String): @Composable () -> Unit{
+    if (isTrick) {
+        return Tutorial10LambdaTrick
+    } else {
+        printText(extraTreat(5))
+        return Tutorial10LambdaTreat
+    }
+}
+val Tutorial10LambdaTrick: @Composable () -> Unit = {
+//    Specifying the "@Composable () -> Unit" type for a lambda function indicates that the function,
+//    which is annotated with the "@Composable" annotation, takes no parameters and has no return value.
+//    This way, the function is recognized as a Composable function that is responsible for rendering UI.
+    printText("No treats!")
+}
+val Tutorial10LambdaTreat: @Composable () -> Unit = {
+    printText("Have a treat!")
+}
+
 @Composable
 fun printText(message: String = "") {
     Text(text = message)
