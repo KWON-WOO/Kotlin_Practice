@@ -453,7 +453,7 @@ fun Tutorial9() {
     }
 }
 
-class RangeRegulator(initialValue: Int, private val minValue: Int, private val maxValue: Int): ReadWriteProperty<Any?, Int> {
+class Tutorial9RangeRegulator(initialValue: Int, private val minValue: Int, private val maxValue: Int): ReadWriteProperty<Any?, Int> {
     var fieldData = initialValue
     override fun getValue(thisRef: Any?, property: KProperty<*>): Int{
         return fieldData
@@ -495,8 +495,8 @@ open class Tutorial9SmartDevice(val name: String, val category: String){
 
 class Tutorial9TV(deviceName: String, deviceCategory: String) : Tutorial9SmartDevice(name = deviceName, category= deviceCategory) {
     override val deviceType = "Smart TV"
-    private var speakerVolume by RangeRegulator(initialValue = 1, minValue = 0, maxValue = 100)
-    private var channelNumber by RangeRegulator(initialValue = 1, minValue = 0, maxValue = 200)
+    private var speakerVolume by Tutorial9RangeRegulator(initialValue = 1, minValue = 0, maxValue = 100)
+    private var channelNumber by Tutorial9RangeRegulator(initialValue = 1, minValue = 0, maxValue = 200)
 
     @Composable
     override fun turnOn() {
@@ -538,7 +538,7 @@ class Tutorial9TV(deviceName: String, deviceCategory: String) : Tutorial9SmartDe
 
 class Tutorial9LightDevice(deviceName: String, deviceCategory: String) : Tutorial9SmartDevice(name = deviceName, category = deviceCategory) {
     override val deviceType = "Smart Light"
-    var brightnessLevel by RangeRegulator(initialValue = 2, minValue = 0, maxValue = 100)
+    var brightnessLevel by Tutorial9RangeRegulator(initialValue = 2, minValue = 0, maxValue = 100)
     @Composable
     override fun turnOn() {
         brightnessLevel = 2
