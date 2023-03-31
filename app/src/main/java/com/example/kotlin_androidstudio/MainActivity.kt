@@ -672,7 +672,7 @@ fun Tutorial10() {
         val cupcake: (Int) -> String = {
             "Have a cupcake!"
         }
-        val trickFunction = Tutorial10TrickOrTreat(true, cupcake)
+        val trickFunction = Tutorial10TrickOrTreat(true, null)
         val treatFunction = Tutorial10TrickOrTreat(false, coins)
         treatFunction()
         trickFunction()
