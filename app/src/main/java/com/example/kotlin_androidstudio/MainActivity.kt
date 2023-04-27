@@ -666,24 +666,23 @@ class Tutorial9SmartHome(
 @Composable
 fun Tutorial10() {
     Column {
-        val coins: (Int) -> String = { quantity ->
-            "$quantity quarters"
-        }
-        val cupcake: (Int) -> String = {
-            "Have a cupcake!"
-        }
+//        val cupcake: (Int) -> String = {
+//            "Have a cupcake!"
+//        }
         val trickFunction = Tutorial10TrickOrTreat(true, null)
-        val treatFunction = Tutorial10TrickOrTreat(false, coins)
+        val treatFunction = Tutorial10TrickOrTreat(false) {"$it quarters"}
         treatFunction()
         trickFunction()
     }
 }
 @Composable
-fun Tutorial10TrickOrTreat(isTrick: Boolean, extraTreat: (Int) -> String): @Composable () -> Unit{
+fun Tutorial10TrickOrTreat(isTrick: Boolean, extraTreat: ((Int) -> String)?): @Composable () -> Unit{
     if (isTrick) {
         return Tutorial10LambdaTrick
     } else {
-        printText(extraTreat(5))
+        if (extraTreat != null) {
+            printText(extraTreat(5))
+        } else printText("null")
         return Tutorial10LambdaTreat
     }
 }
